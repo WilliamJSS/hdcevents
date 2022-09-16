@@ -13,23 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\EventController;
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/', [EventController::class, 'index']);
 
-Route::get('/products', function () {
+Route::get('/events/create', [EventController::class, 'create']);
 
-    // Exemplo de busca: http://hdcevents.local/products?search=camisa
+Route::get('/contact', [EventController::class, 'contact']);
 
-    $busca = request('search');
+Route::get('/products', [EventController::class, 'list_products']);
 
-    return view('products', ['busca' => $busca]);
-});
-
-Route::get('/products_teste/{id?}', function ($id = null) {
-    return view('product', ['id' => $id]);
-});
+Route::get('/products_teste/{id?}', [EventController::class, 'show_product']);
